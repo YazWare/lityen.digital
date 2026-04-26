@@ -3,338 +3,167 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>lityen — catalog 🔥</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>lityen 🔥</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #100c06; --bg2: #1a1408; --bg3: #231b0a;
+    --border: rgba(255,190,80,0.12); --border-hover: rgba(255,190,80,0.40);
+    --accent: #ffb830; --accent-dim: rgba(255,184,48,0.14);
+    --text: #fff8ee; --text2: #c8a060; --text3: #8a6030;
+    --orange: #ff6b1a; --orange-bg: rgba(255,107,26,0.13); --orange-border: rgba(255,107,26,0.35);
+  }
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--bg); color: var(--text);
+    min-height: 100vh; overflow-x: hidden;
+    display: flex; flex-direction: column;
+  }
+  body::before {
+    content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  }
+  .orb-a {
+    position: fixed; top: -200px; left: -150px; width: 700px; height: 700px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,140,20,0.13) 0%, transparent 65%);
+    pointer-events: none; z-index: 0;
+  }
+  .orb-b {
+    position: fixed; bottom: -200px; right: -150px; width: 650px; height: 650px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,60,0,0.09) 0%, transparent 65%);
+    pointer-events: none; z-index: 0;
+  }
 
-body {
-  font-family: 'Outfit', sans-serif;
-  background: #100c06;
-  color: #fff8ee;
-  min-height: 100vh;
-}
+  header {
+    position: relative; z-index: 10;
+    padding: 1.25rem 1.75rem;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+    background: rgba(16,12,6,0.75); backdrop-filter: blur(20px);
+  }
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.55rem; letter-spacing: 0.09em; color: var(--text); text-decoration: none;
+  }
+  .admin-link { font-size: 0.72rem; color: var(--text3); text-decoration: none; transition: color 0.2s; }
+  .admin-link:hover { color: var(--accent); }
 
-/* orbs */
-.orb-a {
-  position: fixed; top: -200px; left: -150px; width: 700px; height: 700px;
-  border-radius: 50%; pointer-events: none; z-index: 0;
-  background: radial-gradient(circle, rgba(255,140,20,0.12) 0%, transparent 65%);
-}
-.orb-b {
-  position: fixed; bottom: -200px; right: -150px; width: 650px; height: 650px;
-  border-radius: 50%; pointer-events: none; z-index: 0;
-  background: radial-gradient(circle, rgba(255,60,0,0.09) 0%, transparent 65%);
-}
+  .hero {
+    flex: 1; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; padding: 4rem 1.5rem;
+    position: relative; z-index: 1; gap: 1rem;
+  }
+  .pill {
+    font-size: 0.68rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--accent); border: 1px solid rgba(255,184,48,0.25);
+    padding: 0.28rem 0.9rem; border-radius: 100px; background: rgba(255,184,48,0.06);
+  }
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(5.5rem, 18vw, 12rem);
+    letter-spacing: 0.07em; line-height: 0.88;
+    background: linear-gradient(155deg, #fff8ee 0%, #ffb830 50%, #ff4d00 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    filter: drop-shadow(0 0 80px rgba(255,130,20,0.28));
+  }
+  .hero-sub {
+    font-size: 0.95rem; font-weight: 300; color: var(--text2);
+    max-width: 380px; line-height: 1.65;
+  }
+  .hero-sub strong { color: var(--text); font-weight: 500; }
 
-/* HEADER */
-.header {
-  position: sticky; top: 0; z-index: 100;
-  background: rgba(16,12,6,0.95);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255,190,80,0.12);
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 1.5rem; height: 56px;
-}
-.logo {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 1.5rem; letter-spacing: 0.1em;
-  color: #fff8ee; text-decoration: none;
-}
-.admin-link {
-  font-size: 0.72rem; color: #8a6030;
-  text-decoration: none;
-}
-.admin-link:hover { color: #ffb830; }
+  .cards {
+    display: flex; gap: 1rem; margin-top: 1.5rem;
+    flex-wrap: wrap; justify-content: center; width: 100%; max-width: 660px;
+  }
+  .cta {
+    flex: 1; min-width: 250px; max-width: 310px;
+    background: rgba(255,255,255,0.025);
+    border: 1px solid var(--border); border-radius: 18px;
+    padding: 1.6rem 1.4rem; text-decoration: none; color: inherit;
+    display: flex; flex-direction: column; gap: 0.65rem;
+    transition: all 0.25s; text-align: left;
+  }
+  .cta:hover {
+    border-color: var(--border-hover);
+    background: rgba(255,184,48,0.04);
+    transform: translateY(-4px);
+    box-shadow: 0 16px 50px rgba(255,120,0,0.1);
+  }
+  .cta-icon { font-size: 1.8rem; line-height: 1; }
+  .cta-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.35rem; letter-spacing: 0.06em; color: var(--text);
+  }
+  .cta-desc { font-size: 0.78rem; color: var(--text2); line-height: 1.65; font-weight: 300; flex: 1; }
+  .perks { display: flex; flex-direction: column; gap: 0.38rem; }
+  .perk {
+    font-size: 0.74rem; color: var(--text2);
+    display: flex; align-items: center; gap: 0.45rem;
+  }
+  .perk::before { content: '✓'; color: var(--accent); font-weight: 700; font-size: 0.68rem; flex-shrink: 0; }
 
-/* FILTER BAR */
-.filter-bar {
-  position: sticky; top: 56px; z-index: 90;
-  background: rgba(16,12,6,0.95);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(255,190,80,0.12);
-  padding: 0.6rem 1.5rem;
-  display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;
-}
+  .cta-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: 'Outfit', sans-serif; font-size: 0.8rem; font-weight: 600;
+    padding: 0.55rem 1.2rem; border-radius: 100px; margin-top: 0.2rem;
+    transition: all 0.2s; letter-spacing: 0.02em; cursor: pointer;
+  }
+  .cta-btn-accent { background: var(--accent); color: #100c06; border: none; }
+  .cta-btn-accent:hover { opacity: 0.87; }
+  .cta-btn-orange { background: var(--orange-bg); border: 1px solid var(--orange-border); color: var(--orange); }
+  .cta-btn-orange:hover { background: rgba(255,107,26,0.22); }
 
-.search-wrap { position: relative; }
-.search-wrap svg {
-  position: absolute; left: 0.65rem; top: 50%; transform: translateY(-50%);
-  color: #8a6030; pointer-events: none; width: 13px; height: 13px;
-}
-.search-input {
-  background: #231b0a; border: 1px solid rgba(255,190,80,0.12);
-  border-radius: 100px; color: #fff8ee;
-  font-family: 'Outfit', sans-serif; font-size: 0.78rem;
-  padding: 0.42rem 0.85rem 0.42rem 2rem;
-  outline: none; width: 220px;
-  transition: border-color 0.2s;
-}
-.search-input:focus { border-color: #ffb830; }
-.search-input::placeholder { color: #8a6030; }
-
-.tab {
-  font-family: 'Outfit', sans-serif; font-size: 0.7rem; font-weight: 500;
-  padding: 0.28rem 0.8rem; border-radius: 100px;
-  border: 1px solid transparent; background: transparent; color: #8a6030;
-  cursor: pointer; white-space: nowrap; transition: all 0.18s;
-}
-.tab:hover { color: #c8a060; border-color: rgba(255,190,80,0.12); }
-.tab.active {
-  background: rgba(255,184,48,0.14);
-  border-color: rgba(255,184,48,0.35);
-  color: #ffb830;
-}
-
-.seen-btn {
-  font-family: 'Outfit', sans-serif; font-size: 0.7rem; font-weight: 500;
-  padding: 0.28rem 0.8rem; border-radius: 100px;
-  border: 1px solid rgba(255,190,80,0.12); background: transparent; color: #8a6030;
-  cursor: pointer; white-space: nowrap; transition: all 0.18s;
-}
-.seen-btn:hover { color: #c8a060; }
-.seen-btn.active {
-  background: rgba(255,107,26,0.13);
-  border-color: rgba(255,107,26,0.35);
-  color: #ff6b1a;
-}
-
-.count { font-size: 0.68rem; color: #8a6030; margin-left: auto; }
-
-/* GRID */
-.main { padding: 1.25rem 1.5rem 4rem; position: relative; z-index: 1; }
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 200px));
-  gap: 12px;
-}
-
-/* CARD */
-.card {
-  background: #1a1408;
-  border: 1px solid rgba(255,190,80,0.12);
-  border-radius: 12px;
-  overflow: hidden;
-  cursor: pointer;
-  position: relative;
-  transition: border-color 0.2s, transform 0.2s;
-}
-.card:hover {
-  border-color: rgba(255,190,80,0.4);
-  transform: translateY(-3px);
-}
-
-/* image on top — tall rectangle */
-.card-img {
-  display: block;
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  background: #231b0a;
-  transition: transform 0.4s;
-}
-.card:hover .card-img { transform: scale(1.05); }
-.card-no-img {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 200px;
-  background: #231b0a;
-  font-size: 2.5rem;
-  color: #8a6030;
-}
-
-/* info below */
-.card-info {
-  padding: 0.6rem 0.65rem 0.65rem;
-}
-.card-name {
-  font-size: 0.74rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  line-height: 1.3;
-  color: #fff8ee;
-  margin-bottom: 0.18rem;
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-}
-.card-price {
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: #c8a060;
-  margin-bottom: 0.5rem;
-}
-.card-buy {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.35rem;
-  width: 100%;
-  padding: 0.4rem;
-  border-radius: 7px;
-  background: rgba(255,107,26,0.13);
-  border: 1px solid rgba(255,107,26,0.35);
-  color: #ff6b1a;
-  font-family: 'Outfit', sans-serif;
-  font-size: 0.68rem;
-  font-weight: 600;
-  text-decoration: none;
-  transition: background 0.2s;
-}
-.card-buy:hover { background: rgba(255,107,26,0.25); }
-.card-buy.no-link { opacity: 0.3; pointer-events: none; }
-.card-buy img { width: 11px; height: 11px; border-radius: 2px; }
-
-/* badges */
-.badge-new {
-  position: absolute; top: 0.5rem; left: 0.5rem; z-index: 2;
-  font-size: 0.54rem; font-weight: 700; letter-spacing: 0.08em;
-  text-transform: uppercase; padding: 0.15rem 0.5rem;
-  border-radius: 100px; background: #ffb830; color: #100c06;
-  font-family: 'Outfit', sans-serif;
-}
-.badge-seen {
-  position: absolute; top: 0.5rem; right: 0.5rem; z-index: 2;
-  font-size: 0.62rem; padding: 0.12rem 0.4rem;
-  border-radius: 100px; background: rgba(0,0,0,0.65);
-}
-
-/* loading */
-.loading {
-  grid-column: 1/-1;
-  display: flex; flex-direction: column; align-items: center;
-  gap: 0.75rem; padding: 5rem; color: #8a6030; font-size: 0.8rem;
-}
-.spinner {
-  width: 20px; height: 20px;
-  border: 2px solid rgba(255,190,80,0.12); border-top-color: #ffb830;
-  border-radius: 50%; animation: spin 0.7s linear infinite;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.card { animation: fadeUp 0.35s ease both; }
-
-@media (max-width: 480px) {
-  .grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
-  .card-img, .card-no-img { height: 170px; }
-  .main { padding: 1rem; }
-  .filter-bar, .header { padding-left: 1rem; padding-right: 1rem; }
-  .search-input { width: 160px; }
-}
+  footer {
+    position: relative; z-index: 1; text-align: center;
+    padding: 1.25rem; font-size: 0.66rem; color: var(--text3);
+    border-top: 1px solid var(--border);
+  }
+  @media (max-width: 500px) {
+    .hero { padding: 2.5rem 1rem; }
+    .cta { min-width: 100%; max-width: 100%; }
+  }
 </style>
 </head>
 <body>
 <div class="orb-a"></div>
 <div class="orb-b"></div>
 
-<header class="header">
+<header>
   <a href="index.html" class="logo">lityen 🔥</a>
 
 </header>
 
-<div class="filter-bar">
-  <div class="search-wrap">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-    </svg>
-    <input class="search-input" id="searchInput" type="text" placeholder="Search...">
-  </div>
-  <div id="tabs" style="display:flex;gap:0.25rem;overflow-x:auto;scrollbar-width:none"></div>
-  <button class="seen-btn" id="seenBtn">🎬 Seen on video</button>
-  <span class="count" id="count"></span>
-</div>
+<section class="hero">
+  <div class="pill">rep catalog</div>
+  <div class="hero-title">LITYEN</div>
+  <p class="hero-sub">Your go-to source for <strong>quality reps</strong> — curated finds with QC pics, direct links & the best prices.</p>
 
-<main class="main">
-  <div class="grid" id="grid">
-    <div class="loading"><div class="spinner"></div><span>loading...</span></div>
-  </div>
-</main>
+  <div class="cards">
+    <a href="catalog.html" class="cta">
+      <div class="cta-icon">🛍️</div>
+      <div class="cta-title">Browse Items</div>
+      <div class="cta-desc">Full catalog with QC pics, notes, prices and direct links to Weidian, Taobao & 1688.</div>
+      <span class="cta-btn cta-btn-accent">View all items →</span>
+    </a>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
-import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
-
-const app = initializeApp({
-  apiKey: "AIzaSyBo-hOtlG2aptuJ71LCoAd1BgVUINg3uvE",
-  authDomain: "lityenn.firebaseapp.com",
-  projectId: "lityenn",
-  storageBucket: "lityenn.firebasestorage.app",
-  messagingSenderId: "1074230941679",
-  appId: "1:1074230941679:web:03091885d3e62d4b0a881a"
-});
-const db = getFirestore(app);
-
-let items = [], cat = 'All', seenOnly = false;
-
-async function load() {
-  try {
-    const snap = await getDocs(query(collection(db, 'items'), orderBy('createdAt', 'desc')));
-    items = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-    renderTabs(); render();
-  } catch(e) {
-    document.getElementById('grid').innerHTML = `<div class="loading" style="color:#ff5e7d">Failed — check Firestore rules.</div>`;
-  }
-}
-
-function filtered() {
-  const q = document.getElementById('searchInput').value.trim().toLowerCase();
-  return items.filter(i => {
-    if (cat !== 'All' && i.category !== cat) return false;
-    if (seenOnly && !i.seenOnVideo) return false;
-    if (q && ![ i.name, i.category, ...(i.tags||[]), i.notes ].join(' ').toLowerCase().includes(q)) return false;
-    return true;
-  });
-}
-
-function renderTabs() {
-  const cats = ['All', ...new Set(items.map(i => i.category).filter(Boolean))];
-  document.getElementById('tabs').innerHTML = cats.map(c =>
-    `<button class="tab${c===cat?' active':''}" onclick="setcat('${c}')">${c}</button>`
-  ).join('');
-}
-
-function render() {
-  const list = filtered();
-  document.getElementById('count').textContent = `${list.length} item${list.length!==1?'s':''}`;
-  const grid = document.getElementById('grid');
-  if (!list.length) { grid.innerHTML = `<div class="loading">no items found.</div>`; return; }
-  grid.innerHTML = list.map((item, i) => `
-    <div class="card" onclick="location.href='item.html?id=${item.id}'" style="animation-delay:${i*0.04}s">
-      ${item.isNew ? `<span class="badge-new">new</span>` : ''}
-      ${item.seenOnVideo ? `<span class="badge-seen">🎬</span>` : ''}
-      ${item.img
-        ? `<img class="card-img" src="${item.img}" alt="${item.name}" loading="lazy">`
-        : `<div class="card-no-img">📦</div>`}
-      <div class="card-info">
-        <div class="card-name">${item.name}</div>
-        <div class="card-price">${item.price || ''}</div>
-        ${item.litbuy
-          ? `<a class="card-buy" href="${item.litbuy}" target="_blank" rel="noopener" onclick="event.stopPropagation()">
-               <img src="https://www.google.com/s2/favicons?domain=litbuy.com&sz=16" style="width:13px;height:13px;border-radius:2px">
-               Buy on Litbuy
-             </a>`
-          : `<span class="card-buy no-link">No Litbuy link</span>`}
+    <a href="https://litbuy.com/register?inviteCode=YEN" target="_blank" rel="noopener" class="cta">
+      <div class="cta-icon">💰</div>
+      <div class="cta-title">Register on Litbuy</div>
+      <div class="cta-desc">Best agent for ordering reps. Use my link and get:</div>
+      <div class="perks">
+        <span class="perk">20% off your first order</span>
+        <span class="perk">Up to 40% off on select items</span>
+        <span class="perk">$500 in coupons</span>
       </div>
-    </div>
-  `).join('');
-}
+      <span class="cta-btn cta-btn-orange">Register with my link ↗</span>
+    </a>
+  </div>
+</section>
 
-window.setcat = c => { cat = c; renderTabs(); render(); };
-document.getElementById('searchInput').addEventListener('input', render);
-document.getElementById('seenBtn').addEventListener('click', () => {
-  seenOnly = !seenOnly;
-  document.getElementById('seenBtn').classList.toggle('active', seenOnly);
-  render();
-});
-
-load();
-</script>
+<footer>lityen 🔥 — for educational purposes only</footer>
 </body>
 </html>
