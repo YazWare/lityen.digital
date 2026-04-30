@@ -9,7 +9,7 @@
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --bg: #100c06; --bg2: #1a1408; --bg3: #573d1a;
+    --bg: #100c06; --bg2: #1a1408; --bg3: rgba(255,220,120,0.14);
     --border: rgba(255,200,80,0.20); --border-hover: rgba(255,200,80,0.55);
     --accent: #ffb830; --accent-dim: rgba(255,184,48,0.14);
     --text: #fff8ee; --text2: #f0c878; --text3: #c09050;
@@ -59,7 +59,7 @@
   .pill {
     font-size: 0.68rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
     color: var(--accent); border: 1px solid rgba(255,184,48,0.25);
-    padding: 0.28rem 0.9rem; border-radius: 100px; background: rgba(255,184,48,0.06);
+    padding: 0.28rem 0.9rem; border-radius: 100px; background: rgba(255,220,120,0.08);
   }
   .hero-title {
     font-family: 'Bebas Neue', sans-serif;
@@ -81,7 +81,7 @@
   }
   .cta {
     flex: 1; min-width: 250px; max-width: 310px;
-    background: rgba(255,200,80,0.05); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    background: rgba(255,220,120,0.08); backdrop-filter: blur(60px) saturate(2.5) brightness(1.4); -webkit-backdrop-filter: blur(60px) saturate(2.5) brightness(1.4);
     border: 1px solid var(--border); border-radius: 18px;
     padding: 1.6rem 1.4rem; text-decoration: none; color: inherit;
     display: flex; flex-direction: column; gap: 0.65rem;
@@ -131,6 +131,7 @@
 <body>
 <div class="orb-a"></div>
 <div class="orb-b"></div>
+<div class="orb-c"></div>
 
 <header>
   <a href="index.html" class="logo">lityen 🔥</a>
@@ -142,12 +143,23 @@
   <div class="hero-title">LITYEN</div>
   <p class="hero-sub">Your go-to source for <strong>quality reps</strong> — curated finds with QC pics, direct links & the best prices.</p>
 
+  <p style="font-size:0.68rem;color:var(--text3);max-width:480px;text-align:center;line-height:1.7;padding:0.65rem 1rem;border:1px solid var(--border);border-radius:12px;background:rgba(255,220,120,0.04);backdrop-filter:blur(12px)">
+    ⚠️ This site is strictly for <strong style="color:var(--text2)">personal use</strong>. I strongly condemn any act of reselling replica items for profit. All links are shared for informational purposes only.
+  </p>
+
   <div class="cards">
     <a href="catalog.html" class="cta">
       <div class="cta-icon">🛍️</div>
       <div class="cta-title">Browse Items</div>
       <div class="cta-desc">Full catalog with QC pics, notes, prices and direct links to Weidian, Taobao & 1688.</div>
       <span class="cta-btn cta-btn-accent">View all items →</span>
+    </a>
+
+    <a href="https://t.me/+pKPp6b0j76s4ZDcx" target="_blank" rel="noopener" class="cta">
+      <div class="cta-icon"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Telegram_logo.svg/240px-Telegram_logo.svg.png" style="width:2rem;height:2rem;border-radius:50%"></div>
+      <div class="cta-title">Telegram Channel</div>
+      <div class="cta-desc">Best Telegram channel for rep finds — daily drops, QC pics, and exclusive deals.</div>
+      <span class="cta-btn" style="background:rgba(41,182,246,0.15);border:1px solid rgba(41,182,246,0.4);color:#29b6f6">Join the channel ↗</span>
     </a>
 
     <a href="https://litbuy.com/register?inviteCode=YEN" target="_blank" rel="noopener" class="cta">
