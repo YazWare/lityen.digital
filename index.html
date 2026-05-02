@@ -126,6 +126,36 @@
     .hero { padding: 2.5rem 1rem; }
     .cta { min-width: 100%; max-width: 100%; }
   }
+
+  .scroll-hint {
+    display: flex; align-items: center; gap: 0.4rem;
+    font-size: 0.7rem; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--text3);
+    animation: fadeInDown 1s ease both;
+  }
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .arrow {
+    font-size: 0.7rem; line-height: 1;
+    animation: pulse 1.4s ease-in-out infinite;
+  }
+  .arrow:nth-child(2) { animation-delay: 0.2s; }
+  .arrow:nth-last-child(2) { animation-delay: 0.2s; }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.3; }
+    50%       { opacity: 1; }
+  }
+  .heart {
+    color: #ff7eb3;
+    font-size: 0.7rem;
+    animation: heartbeat 1.2s ease-in-out infinite;
+  }
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    50%       { transform: scale(1.4); }
+  }
 </style>
 </head>
 <body>
@@ -146,6 +176,15 @@
   <p style="font-size:0.68rem;color:var(--text3);max-width:480px;text-align:center;line-height:1.7;padding:0.65rem 1rem;border:1px solid var(--border);border-radius:12px;background:rgba(255,220,120,0.04);backdrop-filter:blur(12px)">
     ⚠️ This site is strictly for <strong style="color:var(--text2)">personal use</strong>. I strongly condemn any act of reselling replica items for profit. All links are shared for informational purposes only.
   </p>
+
+  <div class="scroll-hint">
+    <span class="arrow">↓</span>
+    <span class="arrow">↓</span>
+    scroll down for more
+    <span class="heart">♡</span>
+    <span class="arrow">↓</span>
+    <span class="arrow">↓</span>
+  </div>
 
   <div class="cards">
     <a href="https://litbuy.com/register?inviteCode=YEN" target="_blank" rel="noopener" class="cta">
