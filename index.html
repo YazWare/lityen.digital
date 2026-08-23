@@ -22,6 +22,8 @@
     --dot-color: rgba(155,127,224,0.18);
     --catalog-pill: #fe64a9;
     --danger: #ff5470;
+    --btn-purple: #9b7fe0;
+    --chip: #221c33;
   }
   html[data-theme="dark"] {
     --bg: #1b1530; --card: #241c3d; --white: #d9f2ff;
@@ -33,17 +35,34 @@
     --dot-color: rgba(185,163,238,0.14);
     --catalog-pill: #fe64a9;
     --danger: #ff5470;
+    --btn-purple: #8a6ee6;
+    --chip: #14102a;
   }
   body, header, .cta, .warning-box, .pill { transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease; }
+
+  /* ── falling confetti emoji rain in the background ── */
+  .rain-emoji {
+    position: fixed; top: -10%; z-index: 0; pointer-events: none;
+    font-size: 1.1rem; opacity: 0.35;
+    animation: fallDown linear infinite;
+  }
+  @keyframes fallDown {
+    0%   { transform: translateY(0) rotate(0deg); opacity: 0; }
+    8%   { opacity: 0.4; }
+    92%  { opacity: 0.4; }
+    100% { transform: translateY(115vh) rotate(360deg); opacity: 0; }
+  }
 
   .theme-toggle {
     display: flex; align-items: center; justify-content: center;
     width: 38px; height: 38px; border-radius: 100px;
     border: 2px solid var(--border); background: var(--card);
     cursor: pointer; font-size: 1rem; transition: transform 0.25s ease, border-color 0.2s;
+    animation: toggleIdle 3.5s ease-in-out infinite;
   }
-  .theme-toggle:hover { border-color: var(--lavender-dark); transform: rotate(20deg) scale(1.1); }
-  .theme-toggle:active { transform: rotate(20deg) scale(0.9); }
+  @keyframes toggleIdle { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(-8deg); } }
+  .theme-toggle:hover { border-color: var(--lavender-dark); transform: rotate(25deg) scale(1.15); animation-play-state: paused; }
+  .theme-toggle:active { transform: rotate(25deg) scale(0.85); }
 
   body {
     font-family: 'Quicksand', sans-serif;
@@ -55,12 +74,21 @@
     content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
     background-image: radial-gradient(var(--dot-color) 1.5px, transparent 1.5px);
     background-size: 26px 26px;
-    animation: driftDots 30s linear infinite;
+    animation: driftDots 20s linear infinite;
   }
   @keyframes driftDots {
     0%   { background-position: 0 0; }
     100% { background-position: 260px 260px; }
   }
+  body::after {
+    content: '';
+    position: fixed; inset: -20%; z-index: 0; pointer-events: none;
+    background: conic-gradient(from 0deg, var(--lavender) 0%, var(--mint) 25%, var(--catalog-pill) 50%, var(--lavender) 75%, var(--mint) 100%);
+    opacity: 0.06;
+    animation: spinGradient 26s linear infinite;
+    filter: blur(60px);
+  }
+  @keyframes spinGradient { to { transform: rotate(360deg); } }
 
   /* floating blobby background shapes for extra fun */
   .blob {
@@ -72,10 +100,15 @@
   .blob-3 { width: 22px; height: 22px; background: var(--catalog-pill); opacity: 0.35; bottom: 18%; left: 14%; animation: floatY 8.5s ease-in-out infinite 1s; }
   .blob-4 { width: 14px; height: 14px; background: var(--mint-dark); bottom: 30%; right: 9%; animation: floatY 6.8s ease-in-out infinite 0.3s; }
   .blob-5 { width: 10px; height: 10px; background: var(--lavender-dark); top: 55%; left: 4%; animation: floatY 9s ease-in-out infinite 1.4s; }
+  .blob-6 { width: 16px; height: 16px; background: var(--catalog-pill); opacity: 0.3; top: 68%; right: 20%; animation: floatY 7s ease-in-out infinite 0.8s; }
+  .blob-7 { width: 9px; height: 9px; background: var(--mint); top: 8%; left: 42%; animation: floatY 10s ease-in-out infinite 0.2s; }
+  .blob-8 { width: 13px; height: 13px; background: var(--lavender); bottom: 10%; right: 38%; animation: floatY 8s ease-in-out infinite 1.7s; }
+  .blob-9 { width: 20px; height: 20px; background: var(--mint-dark); opacity: 0.28; top: 40%; right: 5%; animation: floatY 11s ease-in-out infinite 0.6s; }
+  .blob-10 { width: 11px; height: 11px; background: var(--catalog-pill); opacity: 0.32; top: 30%; left: 22%; animation: floatY 6.4s ease-in-out infinite 1.1s; }
   @keyframes floatY {
-    0%, 100% { transform: translateY(0) translateX(0) rotate(0deg); }
-    33%      { transform: translateY(-18px) translateX(8px) rotate(8deg); }
-    66%      { transform: translateY(10px) translateX(-6px) rotate(-6deg); }
+    0%, 100% { transform: translateY(0) translateX(0) rotate(0deg) scale(1); }
+    33%      { transform: translateY(-22px) translateX(10px) rotate(10deg) scale(1.15); }
+    66%      { transform: translateY(14px) translateX(-8px) rotate(-8deg) scale(0.9); }
   }
 
   .sparkle {
@@ -132,23 +165,22 @@
   .hero-title {
     font-family: 'Fredoka', sans-serif;
     font-size: clamp(3.2rem, 12vw, 6.5rem);
-    font-weight: 700; line-height: 1;
-    color: var(--mint-dark);
-    animation: titlePop 0.6s cubic-bezier(.34,1.56,.64,1) both, titleFloat 4s ease-in-out 0.6s infinite;
+    font-weight: 700; line-height: 1.1; letter-spacing: 0.01em;
+    background: linear-gradient(90deg, var(--mint-dark), var(--lavender-dark), var(--catalog-pill), var(--mint-dark));
+    background-size: 300% auto;
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    animation: titlePop 0.6s cubic-bezier(.34,1.56,.64,1) both, titleFloat 4s ease-in-out 0.6s infinite, rainbowShift 6s linear infinite;
   }
+  @keyframes rainbowShift { to { background-position: 300% center; } }
   @keyframes titlePop {
     0%   { opacity: 0; transform: scale(0.6) translateY(30px); }
     100% { opacity: 1; transform: scale(1) translateY(0); }
   }
   @keyframes titleFloat {
-    0%, 100% { transform: translateY(0); }
-    50%      { transform: translateY(-6px); }
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50%      { transform: translateY(-6px) rotate(-1deg); }
   }
-  .hero-title span { color: var(--lavender-dark); display: inline-block; animation: wiggleLetters 3s ease-in-out infinite; }
-  @keyframes wiggleLetters {
-    0%, 100% { transform: rotate(0deg); }
-    50%      { transform: rotate(-3deg); }
-  }
+  .hero-title span { display: inline; }
   .hero-sub {
     font-size: 1rem; font-weight: 500; color: var(--ink-soft);
     max-width: 380px; line-height: 1.6;
@@ -162,7 +194,12 @@
     max-width: 480px; text-align: center; line-height: 1.7;
     padding: 0.7rem 1.1rem; border: 2px solid var(--border);
     border-radius: 16px; background: var(--card);
-    animation: fadeInUp 0.7s ease 0.35s both;
+    animation: fadeInUp 0.7s ease 0.35s both, warningNudge 5s ease-in-out 1.5s infinite;
+  }
+  @keyframes warningNudge {
+    0%, 92%, 100% { transform: rotate(0deg); }
+    94% { transform: rotate(-0.6deg); }
+    96% { transform: rotate(0.6deg); }
   }
   .warning-box strong { color: var(--ink); }
 
@@ -193,19 +230,32 @@
     display: flex; flex-direction: column; gap: 0.65rem;
     transition: transform 0.25s cubic-bezier(.34,1.56,.64,1), box-shadow 0.2s ease, border-color 0.2s;
     text-align: left;
-    animation: popIn 0.5s cubic-bezier(.34,1.56,.64,1) both;
+    animation: popIn 0.5s cubic-bezier(.34,1.56,.64,1) both, cardBreathe 4.5s ease-in-out infinite;
     position: relative;
   }
-  .cards .cta:nth-child(1) { animation-delay: 0.05s; }
-  .cards .cta:nth-child(2) { animation-delay: 0.18s; }
-  .cards .cta:nth-child(3) { animation-delay: 0.31s; }
+  .cards .cta:nth-child(1) { animation-delay: 0.05s, 0s; }
+  .cards .cta:nth-child(2) { animation-delay: 0.18s, 0.7s; }
+  .cards .cta:nth-child(3) { animation-delay: 0.31s, 1.4s; }
   @keyframes popIn { from { opacity: 0; transform: translateY(24px) scale(0.9); } to { opacity: 1; transform: translateY(0) scale(1); } }
-  .cta:not(.cta-disabled):hover {
-    border-color: var(--lavender-dark);
-    transform: translateY(-7px) rotate(-1deg) scale(1.02);
-    box-shadow: 0 16px 34px rgba(155,127,224,0.28);
+  @keyframes cardBreathe {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50%      { transform: translateY(-5px) rotate(0.6deg); }
   }
-  .cta:not(.cta-disabled):active { transform: translateY(-3px) scale(0.98); }
+  .cta:not(.cta-disabled):hover {
+    animation-play-state: paused;
+    border-color: var(--lavender-dark);
+    transform: translateY(-9px) rotate(-1.5deg) scale(1.03);
+    box-shadow: 0 18px 38px rgba(155,127,224,0.3);
+  }
+  .cta:not(.cta-disabled):active { transform: translateY(-4px) scale(0.97); }
+
+  .cta-featured {
+    border-color: var(--btn-purple);
+    box-shadow: 0 0 0 3px rgba(155,127,224,0.15), 0 10px 26px rgba(155,127,224,0.18);
+  }
+  .cta-featured:not(.cta-disabled):hover {
+    box-shadow: 0 0 0 3px rgba(155,127,224,0.22), 0 20px 40px rgba(155,127,224,0.32);
+  }
 
   .cta-icon {
     font-size: 1.8rem; line-height: 1;
@@ -231,7 +281,7 @@
 
   .must-register {
     font-family: 'Fredoka', sans-serif; font-size: 1rem; font-weight: 600;
-    color: #fff; background: var(--ink);
+    color: #fff; background: var(--chip);
     border-radius: 12px; padding: 0.55rem 0.75rem;
     line-height: 1.3; text-align: center;
     animation: gentlePulse 2s ease-in-out infinite;
@@ -243,17 +293,33 @@
     font-family: 'Quicksand', sans-serif; font-size: 0.82rem; font-weight: 700;
     padding: 0.6rem 1.2rem; border-radius: 100px; margin-top: 0.2rem;
     transition: transform 0.15s cubic-bezier(.34,1.56,.64,1); cursor: pointer;
+    position: relative; overflow: hidden;
   }
-  .cta-btn:hover { transform: translateY(-3px) scale(1.04); }
-  .cta-btn:active { transform: translateY(0) scale(0.96); }
-  .cta-btn-lavender { background: var(--lavender-dark); color: #fff; }
+  .cta-btn:hover { transform: translateY(-3px) scale(1.05); }
+  .cta-btn:active { transform: translateY(0) scale(0.94); }
+  .cta-btn::after {
+    content: ''; position: absolute; inset: 0; border-radius: 100px;
+    background: radial-gradient(circle, rgba(255,255,255,0.5) 0%, transparent 70%);
+    opacity: 0; transform: scale(0.5);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  .cta-btn:active::after { opacity: 1; transform: scale(1.6); transition: none; }
+  .cta-btn-lavender {
+    background: linear-gradient(135deg, var(--btn-purple), var(--catalog-pill));
+    color: #fff;
+    font-size: 0.86rem;
+    padding: 0.7rem 1.3rem;
+    animation: btnGlowLavender 2.2s ease-in-out infinite;
+  }
   .cta-btn-mint { background: var(--mint); color: var(--white); }
-  .cta-btn-ink { background: var(--ink); color: #fff; }
+  .cta-btn-ink { background: var(--chip); color: #fff; }
+  @keyframes btnGlowLavender { 0%, 100% { box-shadow: 0 0 0 0 rgba(155,127,224,0.35); } 50% { box-shadow: 0 0 0 9px rgba(155,127,224,0); } }
 
   /* WORK IN PROGRESS state for the catalog card */
   .cta-disabled {
     cursor: not-allowed;
     filter: saturate(0.75);
+    animation: popIn 0.5s cubic-bezier(.34,1.56,.64,1) both;
   }
   .cta-disabled:hover { transform: none; box-shadow: none; border-color: var(--border); }
   .cta-disabled .cta-icon { animation: none; }
@@ -286,6 +352,7 @@
     padding: 1.2rem; font-size: 0.7rem; font-weight: 600; color: var(--ink-soft);
     border-top: 2px solid var(--border);
   }
+  footer span { display: inline-block; animation: wiggleFlame 2.2s ease-in-out infinite; }
   @media (max-width: 500px) {
     .hero { padding: 2.5rem 1rem; }
     .cta { min-width: 100%; max-width: 100%; }
@@ -298,11 +365,24 @@
 </head>
 <body>
 
+<div class="rain-emoji" style="left:6%; font-size:1rem; animation-duration:14s; animation-delay:0s;">✨</div>
+<div class="rain-emoji" style="left:18%; font-size:0.8rem; animation-duration:18s; animation-delay:3s;">💫</div>
+<div class="rain-emoji" style="left:33%; font-size:1.2rem; animation-duration:16s; animation-delay:6s;">🎀</div>
+<div class="rain-emoji" style="left:52%; font-size:0.9rem; animation-duration:20s; animation-delay:1.5s;">✨</div>
+<div class="rain-emoji" style="left:68%; font-size:1.1rem; animation-duration:15s; animation-delay:8s;">💖</div>
+<div class="rain-emoji" style="left:81%; font-size:0.85rem; animation-duration:19s; animation-delay:4s;">💫</div>
+<div class="rain-emoji" style="left:92%; font-size:1rem; animation-duration:17s; animation-delay:10s;">✨</div>
+
 <div class="blob blob-1"></div>
 <div class="blob blob-2"></div>
 <div class="blob blob-3"></div>
 <div class="blob blob-4"></div>
 <div class="blob blob-5"></div>
+<div class="blob blob-6"></div>
+<div class="blob blob-7"></div>
+<div class="blob blob-8"></div>
+<div class="blob blob-9"></div>
+<div class="blob blob-10"></div>
 
 <header>
   <a href="index.html" class="logo"><span class="flame">🔥</span> lityen <span class="flame">🔥</span></a>
@@ -333,7 +413,7 @@
   </div>
 
   <div class="cards">
-    <a href="https://litbuy.com/register?inviteCode=YEN" target="_blank" rel="noopener" class="cta">
+    <a href="https://litbuy.com/register?inviteCode=YEN" target="_blank" rel="noopener" class="cta cta-featured">
       <div class="cta-icon">🔥</div>
       <div class="must-register">💭 you must register with my link below to get the perks</div>
       <div class="cta-title">Register on Litbuy</div>
@@ -362,7 +442,7 @@
   </div>
 </section>
 
-<footer>lityen™ 🔥 — 2026</footer>
+<footer>lityen™ <span>🔥</span> — 2026</footer>
 
 <script>
 (function() {
@@ -378,6 +458,35 @@
     document.documentElement.setAttribute('data-theme', next);
     localStorage.setItem('lityen-theme', next);
     btn.textContent = next === 'dark' ? '☀️' : '🌙';
+  });
+})();
+
+// confetti burst on any clickable cta button
+(function() {
+  const emojis = ['✨','💖','🎉','💫','🧡','⭐'];
+  function burst(x, y) {
+    for (let i = 0; i < 10; i++) {
+      const el = document.createElement('span');
+      el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      el.style.position = 'fixed';
+      el.style.left = x + 'px';
+      el.style.top = y + 'px';
+      el.style.fontSize = (0.7 + Math.random() * 0.6) + 'rem';
+      el.style.pointerEvents = 'none';
+      el.style.zIndex = 999;
+      el.style.transition = 'transform 0.8s cubic-bezier(.2,.8,.3,1), opacity 0.8s ease';
+      document.body.appendChild(el);
+      const angle = (Math.PI * 2 * i) / 10 + Math.random() * 0.5;
+      const dist = 60 + Math.random() * 60;
+      requestAnimationFrame(() => {
+        el.style.transform = `translate(${Math.cos(angle) * dist}px, ${Math.sin(angle) * dist}px) rotate(${Math.random()*360}deg)`;
+        el.style.opacity = '0';
+      });
+      setTimeout(() => el.remove(), 850);
+    }
+  }
+  document.querySelectorAll('.cta-btn').forEach(b => {
+    b.addEventListener('click', (e) => burst(e.clientX, e.clientY));
   });
 })();
 </script>
