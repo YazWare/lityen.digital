@@ -4,85 +4,62 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>lityen — admin</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 <style>
-  /* GATE */
-  .gate {
-    position: fixed; inset: 0; z-index: 999;
-    background: var(--bg);
-    display: flex; align-items: center; justify-content: center;
-  }
-  .gate-box {
-    display: flex; flex-direction: column; align-items: center;
-    gap: 1rem; width: 300px; text-align: center;
-  }
-  .gate-logo {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.8rem; letter-spacing: 0.1em; margin-bottom: 0.5rem;
-  }
-  .gate-sub {
-    font-size: 0.72rem; color: var(--text3);
-    text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600;
-  }
+  .gate-logo { font-family: 'Fredoka', sans-serif; font-size: 1.7rem; font-weight: 700; margin-bottom: 0.4rem; }
+  .gate-sub { font-size: 0.72rem; color: var(--ink-soft); font-weight: 700; letter-spacing: 0.04em; }
   .google-btn {
     display: flex; align-items: center; justify-content: center; gap: 0.75rem;
     width: 100%; padding: 0.75rem 1.25rem;
-    background: #fff; border: none; border-radius: 12px;
-    color: #1a1a1a; font-family: 'Outfit', sans-serif;
-    font-size: 0.88rem; font-weight: 600; cursor: pointer;
-    transition: opacity 0.2s; margin-top: 0.5rem;
+    background: var(--card); border: 2px solid var(--border); border-radius: 14px;
+    color: var(--ink); font-family: 'Quicksand', sans-serif;
+    font-size: 0.88rem; font-weight: 700; cursor: pointer;
+    transition: border-color 0.2s; margin-top: 0.5rem;
   }
-  .google-btn:hover { opacity: 0.9; }
+  .google-btn:hover { border-color: var(--lavender-dark); }
   .google-btn svg { flex-shrink: 0; }
-  .gate-error {
-    font-size: 0.72rem; color: var(--danger); min-height: 1em;
-  }
+  .gate-error { font-size: 0.72rem; color: var(--danger); min-height: 1em; font-weight: 600; }
 
-  /* ADMIN UI */
-  .main { padding: 1.5rem 1.75rem 3rem; position: relative; z-index: 1; }
-  .admin-list { display: flex; flex-direction: column; gap: 0.5rem; }
+  .main { padding: 1.5rem 1.5rem 3rem; position: relative; z-index: 1; }
+  .admin-list { display: flex; flex-direction: column; gap: 0.6rem; }
   .admin-row {
     display: flex; align-items: center; gap: 0.9rem;
-    background: var(--bg2); border: 1px solid var(--border);
-    border-radius: 12px; padding: 0.7rem 0.9rem;
+    background: var(--card); border: 2px solid var(--border);
+    border-radius: 18px; padding: 0.75rem 0.9rem;
     transition: border-color 0.2s;
   }
-  .admin-row:hover { border-color: var(--border-hover); }
+  .admin-row:hover { border-color: var(--lavender-dark); }
   .admin-thumb {
-    width: 54px; height: 54px; border-radius: 8px;
-    background: var(--bg3); flex-shrink: 0;
+    width: 54px; height: 54px; border-radius: 12px;
+    background: var(--bg); flex-shrink: 0;
     display: flex; align-items: center; justify-content: center;
     font-size: 1.3rem; overflow: hidden;
   }
   .admin-thumb img { width: 100%; height: 100%; object-fit: cover; }
   .admin-info { flex: 1; min-width: 0; }
-  .admin-name { font-size: 0.86rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .admin-meta { font-size: 0.68rem; color: var(--text3); margin-top: 0.15rem; }
+  .admin-name { font-size: 0.88rem; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .admin-meta { font-size: 0.7rem; color: var(--ink-soft); font-weight: 600; margin-top: 0.15rem; }
   .admin-dots { display: flex; gap: 0.3rem; margin-top: 0.35rem; flex-wrap: wrap; }
-  .dot { font-size: 0.58rem; padding: 0.08rem 0.42rem; border-radius: 100px; border: 1px solid var(--border); color: var(--text3); }
-  .dot-litbuy { border-color: var(--orange-border); color: var(--orange); }
+  .dot { font-size: 0.6rem; font-weight: 700; padding: 0.1rem 0.5rem; border-radius: 100px; background: var(--bg); color: var(--ink-soft); }
+  .dot-litbuy { background: var(--lavender); color: #fff; }
   .admin-actions { display: flex; gap: 0.4rem; flex-shrink: 0; }
-  .user-pill {
-    display: flex; align-items: center; gap: 0.5rem;
-    font-size: 0.72rem; color: var(--text3);
-  }
-  .user-pill img { width: 24px; height: 24px; border-radius: 100px; }
+  .user-pill { display: flex; align-items: center; gap: 0.5rem; font-size: 0.72rem; color: var(--ink-soft); font-weight: 600; }
+  .user-pill img { width: 26px; height: 26px; border-radius: 100px; }
   .signout-btn {
-    font-size: 0.68rem; color: var(--text3); background: none;
-    border: 1px solid var(--border); border-radius: 100px;
-    padding: 0.2rem 0.6rem; cursor: pointer; transition: all 0.2s;
-    font-family: 'Outfit', sans-serif;
+    font-size: 0.7rem; font-weight: 700; color: var(--ink-soft); background: var(--card);
+    border: 2px solid var(--border); border-radius: 100px;
+    padding: 0.25rem 0.65rem; cursor: pointer; transition: all 0.15s;
+    font-family: 'Quicksand', sans-serif;
   }
-  .signout-btn:hover { color: var(--danger); border-color: rgba(255,94,125,0.3); }
+  .signout-btn:hover { color: var(--danger); border-color: rgba(255,107,138,0.4); }
 </style>
 </head>
 <body>
-<div class="orb-a"></div>
-<div class="orb-b"></div>
 
 <!-- GATE -->
 <div class="gate" id="gate">
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" style="position:fixed;top:1.25rem;right:1.25rem">🌙</button>
   <div class="gate-box">
     <div class="gate-logo">lityen 🔥</div>
     <div class="gate-sub">admin access</div>
@@ -105,6 +82,7 @@
     <div class="header-inner">
       <a href="index.html" class="logo">lityen 🔥</a>
       <div class="header-right">
+        <button class="theme-toggle" id="themeToggleAdmin" aria-label="Toggle dark mode">🌙</button>
         <div class="user-pill">
           <img id="userAvatar" src="" alt="">
           <button class="signout-btn" onclick="signOut()">sign out</button>
@@ -198,7 +176,6 @@ const provider = new GoogleAuthProvider();
 let items = [];
 let editingId = null;
 
-// Auth state
 onAuthStateChanged(auth, user => {
   if (user && user.email === ALLOWED_EMAIL) {
     document.getElementById('gate').style.display = 'none';
@@ -206,7 +183,6 @@ onAuthStateChanged(auth, user => {
     document.getElementById('userAvatar').src = user.photoURL || '';
     loadItems();
   } else if (user) {
-    // wrong account
     fbSignOut(auth);
     document.getElementById('gateError').textContent = 'Access denied. Wrong Google account.';
   } else {
@@ -262,7 +238,7 @@ function renderList() {
       </div>
       <div class="admin-actions">
         <a class="btn btn-outline btn-sm" href="item.html?id=${item.id}" target="_blank">view ↗</a>
-        <button class="btn btn-sm" style="border:1px solid var(--accent-border);color:var(--accent);background:transparent"
+        <button class="btn btn-sm" style="border:2px solid var(--lavender-dark);color:var(--lavender-dark);background:#fff"
           onclick="openEdit('${item.id}')">edit</button>
       </div>
     </div>
@@ -352,6 +328,38 @@ window.deleteItem = async () => {
 document.getElementById('overlay').addEventListener('click', e => {
   if (e.target === e.currentTarget) closeModal();
 });
+</script>
+
+<script>
+(function() {
+  const saved = localStorage.getItem('lityen-theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const theme = saved || (prefersDark ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', theme);
+
+  function syncButtons() {
+    const current = document.documentElement.getAttribute('data-theme');
+    const icon = current === 'dark' ? '☀️' : '🌙';
+    ['themeToggle', 'themeToggleAdmin'].forEach(id => {
+      const btn = document.getElementById(id);
+      if (btn) btn.textContent = icon;
+    });
+  }
+  syncButtons();
+
+  function toggleTheme() {
+    const current = document.documentElement.getAttribute('data-theme');
+    const next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('lityen-theme', next);
+    syncButtons();
+  }
+
+  ['themeToggle', 'themeToggleAdmin'].forEach(id => {
+    const btn = document.getElementById(id);
+    if (btn) btn.addEventListener('click', toggleTheme);
+  });
+})();
 </script>
 </body>
 </html>

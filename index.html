@@ -3,182 +3,184 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>lityen 🔥</title>
+<title>Lityen 🔥 - Main Page</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --bg: #100c06; --bg2: #1a1408; --bg3: rgba(255,220,120,0.14);
-    --border: rgba(255,200,80,0.20); --border-hover: rgba(255,200,80,0.55);
-    --accent: #ffb830; --accent-dim: rgba(255,184,48,0.14);
-    --text: #fff8ee; --text2: #f0c878; --text3: #c09050;
-    --orange: #ff6b1a; --orange-bg: rgba(255,107,26,0.13); --orange-border: rgba(255,107,26,0.35);
+    --bg: #ece4fb; --card: #ffffff; --white: #ffffff;
+    --lavender: #b9a3ee; --lavender-dark: #9b7fe0;
+    --mint: #8fe0d8; --mint-dark: #5fc9bd;
+    --ink: #221c33; --ink-soft: #6b6180;
+    --border: rgba(34,28,51,0.10); --border-strong: rgba(34,28,51,0.18);
+    --header-bg: rgba(244,238,253,0.85);
+    --dot-color: rgba(155,127,224,0.18);
+    --catalog-pill: #fe64a9; 
   }
+  html[data-theme="dark"] {
+    --bg: #1b1530; --card: #241c3d; --white: #d9f2ff;
+    --lavender: #b9a3ee; --lavender-dark: #c9b6f6;
+    --mint: #27c2b2; --mint-dark: #7fe8dc;
+    --ink: hsl(204, 96%, 82%); --ink-soft: #b3a6d1;
+    --border: rgba(255,255,255,0.10); --border-strong: rgba(255,255,255,0.18);
+    --header-bg: rgba(27,21,48,0.85);
+    --dot-color: rgba(185,163,238,0.14);
+    --catalog-pill: #fe64a9; 
+  }
+  body, header, .cta, .warning-box, .pill { transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease; }
+  .theme-toggle {
+    display: flex; align-items: center; justify-content: center;
+    width: 38px; height: 38px; border-radius: 100px;
+    border: 2px solid var(--border); background: var(--card);
+    cursor: pointer; font-size: 1rem; transition: border-color 0.2s;
+  }
+  .theme-toggle:hover { border-color: var(--lavender-dark); }
   body {
-    font-family: 'Outfit', sans-serif;
-    background: var(--bg); color: var(--text);
-    min-height: 100vh; overflow-x: hidden;
-    display: flex; flex-direction: column;
+    font-family: 'Quicksand', sans-serif;
+    background: var(--bg); color: var(--ink);
+    min-height: 100vh; display: flex; flex-direction: column;
   }
   body::before {
     content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-  }
-  .orb-a {
-    position: fixed; top: -200px; left: -150px; width: 700px; height: 700px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(255,180,40,0.45) 0%, transparent 65%);
-    pointer-events: none; z-index: 0;
-  }
-  .orb-b {
-    position: fixed; bottom: -200px; right: -150px; width: 650px; height: 650px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(255,90,0,0.35) 0%, transparent 65%);
-    pointer-events: none; z-index: 0;
+    background-image: radial-gradient(var(--dot-color) 1.5px, transparent 1.5px);
+    background-size: 26px 26px;
   }
 
   header {
     position: relative; z-index: 10;
-    padding: 1.25rem 1.75rem;
+    padding: 1.2rem 1.5rem;
     display: flex; align-items: center; justify-content: space-between;
-    border-bottom: 1px solid var(--border);
-    background: rgba(16,12,6,0.75); backdrop-filter: blur(20px);
+    border-bottom: 2px solid var(--border);
+    background: var(--header-bg); backdrop-filter: blur(10px);
   }
-  .logo {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.55rem; letter-spacing: 0.09em; color: var(--text); text-decoration: none;
-  }
-  .admin-link { font-size: 0.72rem; color: var(--text3); text-decoration: none; transition: color 0.2s; }
-  .admin-link:hover { color: var(--accent); }
+  .logo { font-family: 'Fredoka', sans-serif; font-size: 1.4rem; font-weight: 700; color: var(--ink); text-decoration: none; }
 
   .hero {
     flex: 1; display: flex; flex-direction: column;
     align-items: center; justify-content: center;
-    text-align: center; padding: 4rem 1.5rem;
+    text-align: center; padding: 3.5rem 1.5rem;
     position: relative; z-index: 1; gap: 1rem;
   }
   .pill {
-    font-size: 0.68rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
-    color: var(--accent); border: 1px solid rgba(255,184,48,0.25);
-    padding: 0.28rem 0.9rem; border-radius: 100px; background: rgba(255,220,120,0.08);
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em;
+    color: var(--white); background: var(--catalog-pill);
+    padding: 0.4rem 1rem; border-radius: 100px;
   }
   .hero-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(5.5rem, 18vw, 12rem);
-    letter-spacing: 0.07em; line-height: 0.88;
-    background: linear-gradient(155deg, #fff8ee 0%, #ffb830 50%, #ff4d00 100%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-    filter: drop-shadow(0 0 80px rgba(255,130,20,0.28));
+    font-family: 'Fredoka', sans-serif;
+    font-size: clamp(3.2rem, 12vw, 6.5rem);
+    font-weight: 700; line-height: 1;
+    color: var(--mint-dark);
   }
+  .hero-title span { color: var(--lavender-dark); }
   .hero-sub {
-    font-size: 0.95rem; font-weight: 300; color: var(--text2);
-    max-width: 380px; line-height: 1.65;
+    font-size: 1rem; font-weight: 500; color: var(--ink-soft);
+    max-width: 380px; line-height: 1.6;
   }
-  .hero-sub strong { color: var(--text); font-weight: 500; }
+  .hero-sub strong { color: var(--ink); font-weight: 700; }
+
+  .warning-box {
+    font-size: 0.72rem; font-weight: 600; color: var(--ink-soft);
+    max-width: 480px; text-align: center; line-height: 1.7;
+    padding: 0.7rem 1.1rem; border: 2px solid var(--border);
+    border-radius: 16px; background: var(--card);
+  }
+  .warning-box strong { color: var(--ink); }
+
+  .scroll-hint {
+    display: flex; align-items: center; gap: 0.4rem;
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em;
+    color: var(--ink-soft);
+    animation: fadeInDown 1s ease both;
+  }
+  @keyframes fadeInDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+  .arrow { font-size: 0.75rem; animation: bounce 1.3s ease-in-out infinite; }
+  .arrow:nth-child(2) { animation-delay: 0.15s; }
+  .arrow:nth-last-child(2) { animation-delay: 0.15s; }
+  @keyframes bounce { 0%, 100% { transform: translateY(0); opacity: 0.5; } 50% { transform: translateY(3px); opacity: 1; } }
+  .heart { color: var(--lavender-dark); font-size: 0.85rem; animation: heartbeat 1.1s ease-in-out infinite; }
+  @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.3); } }
 
   .cards {
-    display: flex; gap: 1rem; margin-top: 1.5rem;
-    flex-wrap: wrap; justify-content: center; width: 100%; max-width: 660px;
+    display: flex; gap: 1rem; margin-top: 0.5rem;
+    flex-wrap: wrap; justify-content: center; width: 100%; max-width: 680px;
   }
   .cta {
-    flex: 1; min-width: 250px; max-width: 310px;
-    background: rgba(255,220,120,0.08); backdrop-filter: blur(60px) saturate(2.5) brightness(1.4); -webkit-backdrop-filter: blur(60px) saturate(2.5) brightness(1.4);
-    border: 1px solid var(--border); border-radius: 18px;
+    flex: 1; min-width: 250px; max-width: 320px;
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: 22px;
     padding: 1.6rem 1.4rem; text-decoration: none; color: inherit;
     display: flex; flex-direction: column; gap: 0.65rem;
-    transition: all 0.25s; text-align: left;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s;
+    text-align: left;
+    animation: popIn 0.4s ease both;
   }
+  @keyframes popIn { from { opacity: 0; transform: translateY(14px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
   .cta:hover {
-    border-color: var(--border-hover);
-    background: rgba(255,184,48,0.04);
-    transform: translateY(-4px);
-    box-shadow: 0 16px 50px rgba(255,120,0,0.1);
+    border-color: var(--lavender-dark);
+    transform: translateY(-5px);
+    box-shadow: 0 14px 30px rgba(155,127,224,0.25);
   }
-  .cta-icon { font-size: 1.8rem; line-height: 1; }
-  .cta-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.35rem; letter-spacing: 0.06em; color: var(--text);
+  .cta-icon {
+    font-size: 1.8rem; line-height: 1;
+    width: 3rem; height: 3rem; border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--bg);
   }
-  .cta-desc { font-size: 0.78rem; color: var(--text2); line-height: 1.65; font-weight: 300; flex: 1; }
-  .perks { display: flex; flex-direction: column; gap: 0.38rem; }
-  .perk {
-    font-size: 0.74rem; color: var(--text2);
-    display: flex; align-items: center; gap: 0.45rem;
+  .cta-title { font-family: 'Fredoka', sans-serif; font-size: 1.25rem; font-weight: 600; color: var(--ink); }
+  .cta-desc { font-size: 0.8rem; color: var(--ink-soft); line-height: 1.6; font-weight: 500; flex: 1; }
+  .perks { display: flex; flex-direction: column; gap: 0.4rem; }
+  .perk { font-size: 0.78rem; color: var(--ink-soft); font-weight: 600; display: flex; align-items: center; gap: 0.45rem; }
+  .perk::before { content: '✓'; color: var(--mint-dark); font-weight: 700; font-size: 0.75rem; flex-shrink: 0; }
+
+  .must-register {
+    font-family: 'Fredoka', sans-serif; font-size: 1rem; font-weight: 600;
+    color: #fff; background: var(--ink);
+    border-radius: 12px; padding: 0.55rem 0.75rem;
+    line-height: 1.3; text-align: center;
+    animation: gentlePulse 2s ease-in-out infinite;
   }
-  .perk::before { content: '✓'; color: var(--accent); font-weight: 700; font-size: 0.68rem; flex-shrink: 0; }
+  @keyframes gentlePulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.02); } }
 
   .cta-btn {
     display: inline-flex; align-items: center; justify-content: center;
-    font-family: 'Outfit', sans-serif; font-size: 0.8rem; font-weight: 600;
-    padding: 0.55rem 1.2rem; border-radius: 100px; margin-top: 0.2rem;
-    transition: all 0.2s; letter-spacing: 0.02em; cursor: pointer;
+    font-family: 'Quicksand', sans-serif; font-size: 0.82rem; font-weight: 700;
+    padding: 0.6rem 1.2rem; border-radius: 100px; margin-top: 0.2rem;
+    transition: transform 0.15s ease; cursor: pointer;
   }
-  .cta-btn-accent { background: var(--accent); color: #100c06; border: none; }
-  .cta-btn-accent:hover { opacity: 0.87; }
-  .cta-btn-orange { background: var(--orange-bg); border: 1px solid var(--orange-border); color: var(--orange); }
-  .cta-btn-orange:hover { background: rgba(255,107,26,0.22); }
+  .cta-btn:hover { transform: translateY(-2px); }
+  .cta-btn-lavender { background: var(--lavender-dark); color: #fff; }
+  .cta-btn-mint { background: var(--mint); color: var(--white); }
+  .cta-btn-ink { background: var(--ink); color: #fff; }
 
   footer {
     position: relative; z-index: 1; text-align: center;
-    padding: 1.25rem; font-size: 0.66rem; color: var(--text3);
-    border-top: 1px solid var(--border);
+    padding: 1.2rem; font-size: 0.7rem; font-weight: 600; color: var(--ink-soft);
+    border-top: 2px solid var(--border);
   }
   @media (max-width: 500px) {
     .hero { padding: 2.5rem 1rem; }
     .cta { min-width: 100%; max-width: 100%; }
   }
-
-  .scroll-hint {
-    display: flex; align-items: center; gap: 0.4rem;
-    font-size: 0.7rem; font-weight: 500; letter-spacing: 0.12em;
-    text-transform: uppercase; color: var(--text3);
-    animation: fadeInDown 1s ease both;
-  }
-  @keyframes fadeInDown {
-    from { opacity: 0; transform: translateY(-10px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  .arrow {
-    font-size: 0.7rem; line-height: 1;
-    animation: pulse 1.4s ease-in-out infinite;
-  }
-  .arrow:nth-child(2) { animation-delay: 0.2s; }
-  .arrow:nth-last-child(2) { animation-delay: 0.2s; }
-  @keyframes pulse {
-    0%, 100% { opacity: 0.3; }
-    50%       { opacity: 1; }
-  }
-  .heart {
-    color: #ff7eb3;
-    font-size: 0.7rem;
-    animation: heartbeat 1.2s ease-in-out infinite;
-  }
-  @keyframes heartbeat {
-    0%, 100% { transform: scale(1); }
-    50%       { transform: scale(1.4); }
-  }
-  @keyframes warnPulse {
-    0%, 100% { border-color: rgba(255,107,26,0.4); box-shadow: 0 0 0 0 rgba(255,107,26,0); }
-    50%       { border-color: rgba(255,107,26,0.9); box-shadow: 0 0 16px 4px rgba(255,107,26,0.25); }
-  }
 </style>
 </head>
 <body>
-<div class="orb-a"></div>
-<div class="orb-b"></div>
-<div class="orb-c"></div>
 
 <header>
-  <a href="index.html" class="logo">lityen 🔥</a>
-
+  <a href="index.html" class="logo">🔥 lityen 🔥</a>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">🌙</button>
 </header>
 
 <section class="hero">
   <div class="pill">rep catalog</div>
-  <div class="hero-title">LITYEN</div>
+  <div class="hero-title">LITY<span>EN</span></div>
   <p class="hero-sub">Your go-to source for <strong>quality reps</strong> — curated finds with QC pics, direct links & the best prices.</p>
 
-  <p style="font-size:0.68rem;color:var(--text3);max-width:480px;text-align:center;line-height:1.7;padding:0.65rem 1rem;border:1px solid var(--border);border-radius:12px;background:rgba(255,220,120,0.04);backdrop-filter:blur(12px)">
-    ⚠️ This site is strictly for <strong style="color:var(--text2)">personal use</strong>. I strongly condemn any act of reselling replica items for profit. All links are shared for informational purposes only.
+  <p class="warning-box">
+    ⚠️ This site is strictly for <strong>personal use</strong>. I strongly condemn any act of reselling replica items for profit. All links are shared for informational purposes only.
   </p>
 
   <div class="scroll-hint">
@@ -192,34 +194,52 @@
 
   <div class="cards">
     <a href="https://litbuy.com/register?inviteCode=YEN" target="_blank" rel="noopener" class="cta">
-      <div class="cta-icon">💰</div>
+      <div class="cta-icon">🔥</div>
+      <div class="must-register">💭 you must register with my link below to get the perks</div>
       <div class="cta-title">Register on Litbuy</div>
-      <div style="font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:0.06em;color:#fff8ee;background:rgba(255,107,26,0.12);border:1px solid rgba(255,107,26,0.4);border-radius:8px;padding:0.5rem 0.75rem;line-height:1.3;text-align:center;animation:warnPulse 2s ease-in-out infinite">⚠️ YOU MUST REGISTER WITH MY LINK BELOW TO GET THE PERKS</div>
       <div class="cta-desc">Best agent for ordering reps. Use my link and get:</div>
       <div class="perks">
-        <span class="perk">30% off your first order</span>
+        <span class="perk">40% off your first order</span>
         <span class="perk">Up to 40% off on select items</span>
         <span class="perk">$500 in coupons</span>
       </div>
-      <span class="cta-btn cta-btn-orange">Register with my link ↗</span>
+      <span class="cta-btn cta-btn-lavender">Register with my link ↗</span>
     </a>
 
     <a href="https://t.me/+pKPp6b0j76s4ZDcx" target="_blank" rel="noopener" class="cta">
-      <div class="cta-icon"><img src="https://upload.wikimedia.org/wikipedia/commons/f/fd/Telegram_blue_icon.png" style="width:2rem;height:2rem;border-radius:50%"></div>
+      <div class="cta-icon">💬</div>
       <div class="cta-title">RN FINDS (+30K items)</div>
       <div class="cta-desc">Best and most complete Telegram channel for rep finds — daily drops, QC pics, and deals for any budget.</div>
-      <span class="cta-btn" style="background:rgba(41,182,246,0.15);border:1px solid rgba(41,182,246,0.4);color:#29b6f6">Join the channel ↗</span>
+      <span class="cta-btn cta-btn-mint">Join the channel ↗</span>
     </a>
 
     <a href="catalog.html" class="cta">
       <div class="cta-icon">🛍️</div>
       <div class="cta-title">Browse Tiktok Items</div>
       <div class="cta-desc">Full catalog of items seen on TikTok with QC pics, notes, prices and link to Litbuy (and much more items).</div>
-      <span class="cta-btn cta-btn-accent">View all items →</span>
+      <span class="cta-btn cta-btn-ink">View all items →</span>
     </a>
   </div>
 </section>
 
-<footer>lityen 🔥 — for educational purposes only</footer>
+<footer>lityen™ 🔥 — 2026</footer>
+
+<script>
+(function() {
+  const saved = localStorage.getItem('lityen-theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const theme = saved || (prefersDark ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', theme);
+  const btn = document.getElementById('themeToggle');
+  btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  btn.addEventListener('click', () => {
+    const current = document.documentElement.getAttribute('data-theme');
+    const next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('lityen-theme', next);
+    btn.textContent = next === 'dark' ? '☀️' : '🌙';
+  });
+})();
+</script>
 </body>
 </html>
